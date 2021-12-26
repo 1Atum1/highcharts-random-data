@@ -1,0 +1,27 @@
+<ng-container *ngIf="options">
+  <mat-form-field appearance="fill">
+    <mat-label>Type of chart</mat-label>
+    <mat-select [formControl]="typesControl">
+      <mat-option *ngFor="let type of types" [value]="type.value">
+        {{type.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-container *ngFor="let item of colorControlsArr; let i = index">
+    <mat-form-field appearance="fill">
+      <mat-label>{{item.title}}</mat-label>
+      <mat-select [formControl]="item.control" (selectionChange)="colorChange(item.control.value, i)">
+        <mat-option *ngFor="let color of colors" [value]="color.value">
+          {{color.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+
+  <div
+    id="container"
+    [chart]="chart"
+    style = "width: 100%; height: 400px; display: block;">
+  </div>
+</ng-container>

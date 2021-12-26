@@ -1,0 +1,6 @@
+<mat-form-field class="example-form-field" appearance="fill">
+  <mat-label>Select date</mat-label>
+  <input matInput [textMask]="{mask: datemask}" id="date" type="text" [(ngModel)]="date" (keyup)="dateChange($event)">
+</mat-form-field>
+
+

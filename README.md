@@ -1,6 +1,15 @@
-# BergmannTestCharts
+# Highcharts with random data
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.13.
+
+25.12.2021
+
+##Used plugins
+
+- [Angular Material](https://material.angular.io/)
+- [Tailwindcss](https://tailwindcss.com/)
+- [UI-Router for Angular (2+)](https://ui-router.github.io/ng2/)
+- [Highcharts Angular](https://www.highcharts.com/)
 
 ## Development server
 
