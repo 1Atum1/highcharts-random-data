@@ -16,13 +16,6 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {TextMaskModule} from "angular2-text-mask";
 
-const chartOneState = { name: "chart-one", url: "/chartOne", component: ChartPageOneComponent };
-const chartTwoState = { name: "chart-two", url: "/chartTwo", component: ChartPageTwoComponent };
-
-function uiRouterConfigFn(router: UIRouter, injector: Injector) {
-  router.urlService.rules.initial({ state: chartOneState });
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +30,6 @@ function uiRouterConfigFn(router: UIRouter, injector: Injector) {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    UIRouterModule.forRoot({states: [chartOneState, chartTwoState], useHash: true, config: uiRouterConfigFn}),
     FormsModule,
     ChartModule,
     MatSelectModule,

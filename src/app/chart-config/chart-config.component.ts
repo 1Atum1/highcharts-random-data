@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {of, Subject, SubscriptionLike} from "rxjs";
-import {debounceTime, distinctUntilChanged, filter, switchMap, tap} from "rxjs/operators";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject, SubscriptionLike} from "rxjs";
+import {debounceTime, distinctUntilChanged, filter, tap} from "rxjs/operators";
 import {AppService} from "../app.service";
 
 
@@ -9,7 +9,7 @@ import {AppService} from "../app.service";
   templateUrl: './chart-config.component.html',
   styleUrls: ['./chart-config.component.scss']
 })
-export class ChartConfigComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ChartConfigComponent implements OnInit, OnDestroy {
 
   public date: any;
   public datemask: any[] = [/\d/, /\d/, '.', /\d/, /\d/, '.', /\d/, /\d/, /\d/, /\d/];
@@ -28,9 +28,6 @@ export class ChartConfigComponent implements OnInit, AfterViewInit, OnDestroy {
        this.appService.globalDate$.next(v)
       })
     ).subscribe()
-  }
-
-  ngAfterViewInit() {
   }
 
   dateChange(event: any) {

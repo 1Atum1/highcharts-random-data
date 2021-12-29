@@ -14,7 +14,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
   @Input() options: any
 
-  public chart: any;
+  public chart: Chart;
 
   public types: ChartTypes[] = [
     {value: 'line', viewValue: 'Line'},
@@ -32,13 +32,12 @@ export class ChartComponent implements OnInit, AfterViewInit {
   ];
 
   public typesControl: FormControl = new FormControl();
-  public colorControlsArr: any[] = []
+  public colorControlsArr: {title: string, control: FormControl}[] = []
 
   constructor(private cdr: ChangeDetectorRef, private appService: AppService) {}
 
   ngOnInit(): void {
     if (this.options) {
-      console.log(this.options);
       this.typesControl.patchValue(this.options.series[0].type);
 
       this.options.series.forEach((s: any, index: number) => {
@@ -47,11 +46,8 @@ export class ChartComponent implements OnInit, AfterViewInit {
       })
 
       this.appService.globalDate$$.subscribe(v => {
-
       })
-
-
-      this.changeChartType()
+      this.changeChartType();
     }
 
   }
@@ -70,8 +66,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
   }
 
   colorChange(event: any, index: number) {
-    this.options.series[index].color = event
-    console.log(this.options);
+    this.options.series[index].color = event;
     this.chart = new Chart(Object.assign(this.options, {}));
     this.cdr.detectChanges();
   }

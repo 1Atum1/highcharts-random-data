@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'bergmann-test-charts'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('bergmann-test-charts');
+    expect(app.title).toEqual('test-charts');
   });
 
   it('should render title', () => {

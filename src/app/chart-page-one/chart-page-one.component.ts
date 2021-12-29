@@ -1,28 +1,27 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy} from '@angular/core';
 import * as moment from "moment";
 import {AppService} from "../app.service";
+import {takeWhile} from "rxjs/operators";
 
 @Component({
   selector: 'app-chart-page-one',
   templateUrl: './chart-page-one.component.html',
   styleUrls: ['./chart-page-one.component.scss']
 })
-export class ChartPageOneComponent implements OnInit, AfterViewInit {
+export class ChartPageOneComponent implements AfterViewInit, OnDestroy {
 
-  public data: any[] = [];
+  public data: sampleData[] = [];
   private userDate: string;
+
+  private isAlive: boolean;
 
   constructor(private appService: AppService) { }
 
-  ngOnInit(): void {
-  }
-
   ngAfterViewInit() {
-    this.appService.globalDate$$.subscribe((date: string) => {
-      console.log(date);
+    this.isAlive = true;
+    this.appService.globalDate$$.pipe(takeWhile(() => this.isAlive)).subscribe((date: string) => {
       this.userDate = date;
       const length = this.data.length
-      console.log(length);
       if (this.data.length) {
         this.data = []
         for(let i = 0; i < length; i++) {
@@ -31,13 +30,16 @@ export class ChartPageOneComponent implements OnInit, AfterViewInit {
       } else {
         this.addChart();
       }
-
     })
   }
 
   addChart() {
     if (this.data.length >= 4) { return }
     this.data.push(new sampleData(this.userDate).getData());
+  }
+
+  ngOnDestroy() {
+    this.isAlive = false;
   }
 
 }
@@ -80,32 +82,32 @@ export class sampleData {
   constructor(dateFrom?: any, lengthOfData?: any) {
     this.lengthOfData = lengthOfData ? lengthOfData : this.lengthOfData;
     this.dateFrom = dateFrom ? moment(dateFrom) : this.dateFrom;
-    this.generateRandomData()
+    this.generateRandomData();
   }
 
   generateRandomData() {
     this.data.series.forEach((v: any) => {
       this.fillSeriesData(v.data);
       if (this.randomColor) {
-        v.color = this.colors[Math.floor(Math.random() * this.colors.length)]
+        v.color = this.colors[Math.floor(Math.random() * this.colors.length)];
       }
     })
     this.fillCategories();
   }
 
   getData() {
-    return this.data
+    return this.data;
   }
 
   fillSeriesData(source: any) {
     for (let i = 0; i < this.lengthOfData; i++) {
-      source.push(Math.floor(Math.random() * 100) + 1)
+      source.push(Math.floor(Math.random() * 100) + 1);
     }
   }
 
   fillCategories() {
     for (let i = 0; i < this.lengthOfData; i++) {
-      this.data.xAxis.categories.push(this.dateFrom.add(i == 0 ? 0 : 1, 'd').format('DD.MM.yyyy'))
+      this.data.xAxis.categories.push(this.dateFrom.add(i == 0 ? 0 : 1, 'd').format('DD.MM.yyyy'));
     }
   }
 }
